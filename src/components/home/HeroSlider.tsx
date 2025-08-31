@@ -13,28 +13,28 @@ interface SlideData {
 const slides: SlideData[] = [
   {
     id: 1,
-    image: '/Slider1 (1).jpeg',
+    image: '/Slider1-1.jpeg',
     title: 'Fashion',
     subtitle: 'Redefined',
     description: 'Discover the latest trends in premium Pakistani fashion'
   },
   {
     id: 2,
-    image: '/Slider1 (2).jpeg',
+    image: '/Slider1-2.jpeg',
     title: 'Elegance',
     subtitle: 'Unveiled',
     description: 'Sophisticated styles for the modern woman'
   },
   {
     id: 3,
-    image: '/Slider1 (3).jpeg',
+    image: '/Slider1-3.jpeg',
     title: 'Style',
     subtitle: 'Perfected',
     description: 'Curated collections that define contemporary fashion'
   },
   {
     id: 4,
-    image: '/Slider1 (4).jpeg',
+    image: '/Slider1-4.jpeg',
     title: 'Luxury',
     subtitle: 'Accessible',
     description: 'Premium quality fashion at affordable prices'
