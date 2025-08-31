@@ -61,7 +61,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             <div className="flex flex-shrink-0 items-center px-4">
               <h1 className="text-xl font-bold text-gray-900">Admin Panel</h1>
             </div>
-            <nav className="mt-5 space-y-1 px-2">
+            <nav className="mt-5 flex-1 space-y-1 px-2">
               {navigation.map((item) => {
                 const isActive = location.pathname === item.href;
                 return (
@@ -73,6 +73,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                         ? 'bg-primary-100 text-primary-900'
                         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                     }`}
+                    onClick={() => setSidebarOpen(false)}
                   >
                     <item.icon className="mr-4 h-6 w-6 flex-shrink-0" />
                     {item.name}
@@ -80,6 +81,21 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                 );
               })}
             </nav>
+            {/* Mobile logout section */}
+            <div className="border-t border-gray-200 p-4">
+              <div className="flex items-center">
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-700">{user?.firstName} {user?.lastName}</p>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center text-xs font-medium text-gray-500 hover:text-gray-700"
+                  >
+                    <ArrowRightOnRectangleIcon className="mr-1 h-4 w-4" />
+                    Logout
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
