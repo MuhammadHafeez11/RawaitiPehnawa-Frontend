@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { ApiResponse, AuthResponse, User, Product, ProductsResponse, Category, Cart, Order, FilterOptions } from '../types';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL 
+  ? `${process.env.REACT_APP_API_URL}/api`
+  : 'http://localhost:5000/api';
 
 // Add request interceptor to handle CORS
 axios.defaults.withCredentials = true;
