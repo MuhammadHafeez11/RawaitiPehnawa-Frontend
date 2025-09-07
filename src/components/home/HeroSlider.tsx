@@ -106,16 +106,16 @@ const HeroSlider: React.FC = () => {
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="max-w-2xl space-y-6"
+                className="max-w-2xl space-y-6 ml-20 md:ml-16 lg:ml-20"
               >
-                <div className="space-y-2">
-                  <h1 className="text-5xl lg:text-7xl font-display font-bold text-white leading-tight">
+                <div className="space-y-2 pr-16 md:pr-8 lg:pr-0">
+                  <h1 className="text-4xl md:text-5xl lg:text-7xl font-display font-bold text-white leading-tight">
                     {slides[currentSlide].title}
                     <span className="block text-gradient-white">
                       {slides[currentSlide].subtitle}
                     </span>
                   </h1>
-                  <p className="text-xl text-white/90 leading-relaxed">
+                  <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-lg md:max-w-2xl">
                     {slides[currentSlide].description}
                   </p>
                 </div>

@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { ApiResponse, AuthResponse, User, Product, ProductsResponse, Category, Cart, Order, FilterOptions } from '../types';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL 
-  ? `${process.env.REACT_APP_API_URL}/api`
-  : 'http://localhost:5000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 
+  (process.env.NODE_ENV === 'production' 
+    ? 'https://ecommerce-backend-psi-six.vercel.app/api' 
+    : 'http://localhost:5000/api');
 
 // Add request interceptor to handle CORS
 axios.defaults.withCredentials = true;
@@ -37,11 +38,16 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Response interceptor for token refresh
+// Response interceptor for token refresh and error handling
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    
+    // Only log errors in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API Error:', error.response?.data || error.message);
+    }
     
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -72,6 +78,20 @@ api.interceptors.response.use(
         }
         
         return Promise.reject(refreshError);
+      }
+    } else if (error.response?.status >= 500) {
+      // Handle server errors
+      if (typeof window !== 'undefined') {
+        import('react-hot-toast').then(({ default: toast }) => {
+          toast.error('Server error. Please try again later.');
+        });
+      }
+    } else if (error.code === 'NETWORK_ERROR' || !error.response) {
+      // Handle network errors
+      if (typeof window !== 'undefined') {
+        import('react-hot-toast').then(({ default: toast }) => {
+          toast.error('Network error. Please check your connection.');
+        });
       }
     }
     

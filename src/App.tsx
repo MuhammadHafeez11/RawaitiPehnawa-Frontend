@@ -15,6 +15,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminCategories from './pages/admin/AdminCategories';
+import AdminCollections from './pages/admin/AdminCollections';
 import AdminAnalytics from './pages/admin/AdminAnalytics';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminProductForm from './pages/admin/AdminProductForm';
@@ -23,9 +24,12 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
 import ScrollToTop from './components/common/ScrollToTop';
+import ErrorBoundary from './components/common/ErrorBoundary';
 import SizeGuide from './pages/SizeGuide';
 import Shipping from './pages/Shipping';
 import Returns from './pages/Returns';
+import CategoryPage from './pages/CategoryPage';
+import CollectionPage from './pages/CollectionPage';
 
 // Toast configuration
 const toastOptions = {
@@ -56,12 +60,13 @@ const toastOptions = {
 
 function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <GuestCartProvider>
-          <WishlistProvider>
-          <div className="App">
-            <ScrollToTop />
+    <ErrorBoundary>
+      <Router>
+        <AuthProvider>
+          <GuestCartProvider>
+            <WishlistProvider>
+            <div className="App">
+              <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
@@ -76,26 +81,29 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/cart" element={<GuestCart />} />
               <Route path="/checkout" element={<Checkout />} />
-              <Route path="/category/:slug" element={<Products />} />
+              <Route path="/category/:slug" element={<CategoryPage />} />
+              <Route path="/collection/:slug" element={<CollectionPage />} />
               <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
               <Route path="/admin/products" element={<AdminRoute><AdminProducts /></AdminRoute>} />
               <Route path="/admin/orders" element={<AdminRoute><AdminOrders /></AdminRoute>} />
               <Route path="/admin/categories" element={<AdminRoute><AdminCategories /></AdminRoute>} />
+              <Route path="/admin/collections" element={<AdminRoute><AdminCollections /></AdminRoute>} />
               <Route path="/admin/analytics" element={<AdminRoute><AdminAnalytics /></AdminRoute>} />
               <Route path="/admin/settings" element={<AdminRoute><AdminSettings /></AdminRoute>} />
               <Route path="/admin/products/new" element={<AdminRoute><AdminProductForm /></AdminRoute>} />
               <Route path="/admin/products/:id/edit" element={<AdminRoute><AdminProductForm /></AdminRoute>} />
             </Routes>
             
-            <Toaster
-              position={toastOptions.position}
-              toastOptions={toastOptions}
-            />
-          </div>
-          </WishlistProvider>
-        </GuestCartProvider>
-      </AuthProvider>
-    </Router>
+              <Toaster
+                position={toastOptions.position}
+                toastOptions={toastOptions}
+              />
+            </div>
+            </WishlistProvider>
+          </GuestCartProvider>
+        </AuthProvider>
+      </Router>
+    </ErrorBoundary>
   );
 }
 

@@ -56,6 +56,7 @@ export interface Product {
   description: string;
   shortDescription?: string;
   category: Category;
+  categories?: Category[];
   brand?: string;
   images: ProductImage[];
   variants: ProductVariant[];
@@ -77,6 +78,10 @@ export interface Product {
   soldCount: number;
   currentStock?: number;
   stockStatus?: string;
+  targetGender?: string;
+  stitchType?: string;
+  pieceCount?: number;
+  season?: string;
   rating: {
     average: number;
     count: number;
@@ -191,6 +196,10 @@ export interface AuthResponse {
 export interface FilterOptions {
   category?: string;
   search?: string;
+  targetGender?: string;
+  stitchType?: string;
+  pieceCount?: string;
+  season?: string;
   minPrice?: number;
   maxPrice?: number;
   sort?: string;

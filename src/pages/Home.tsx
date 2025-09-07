@@ -5,6 +5,7 @@ import Layout from '../components/layout/Layout';
 import ProductCard from '../components/product/ProductCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import HeroSlider from '../components/home/HeroSlider';
+import CategoriesShowcase from '../components/home/CategoriesShowcase';
 import SEOHelmet from '../components/common/SEOHelmet';
 import { Product, Category } from '../types';
 import { productsAPI, categoriesAPI } from '../services/api';
@@ -164,59 +165,8 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Categories Section */}
-      <section className="section-padding bg-secondary-50">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-display font-bold text-secondary-800 mb-4">
-              Shop by Category
-            </h2>
-            <p className="text-xl text-secondary-600 max-w-2xl mx-auto">
-              Explore our carefully curated collections for women and kids
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {categories.map((category, index) => (
-              <motion.div
-                key={category._id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Link
-                  to={`/category/${category.slug}`}
-                  className="group block relative overflow-hidden rounded-2xl aspect-[4/3] bg-gradient-to-br from-primary-100 to-primary-200"
-                >
-                  {category.image && (
-                    <img
-                      src={category.image}
-                      alt={category.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-white">
-                      <h3 className="text-3xl font-display font-bold mb-2">{category.name}</h3>
-                      <p className="text-lg opacity-90 mb-4">{category.description}</p>
-                      <span className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm rounded-lg font-medium group-hover:bg-white/30 transition-colors">
-                        Shop Now
-                        <ArrowRightIcon className="w-5 h-5 ml-2" />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Categories Showcase - New Hierarchical Design */}
+      <CategoriesShowcase />
 
       {/* Featured Products Section */}
       <section className="section-padding bg-white">

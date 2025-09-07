@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { FunnelIcon, Squares2X2Icon, ListBulletIcon } from '@heroicons/react/24/outline';
 import Layout from '../components/layout/Layout';
@@ -15,10 +15,16 @@ const Products: React.FC = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showFilters, setShowFilters] = useState(false);
   const [pagination, setPagination] = useState({ page: 1, limit: 12, total: 0, pages: 0 });
+  const productsGridRef = useRef<HTMLDivElement>(null);
+  const [shouldPreserveScroll, setShouldPreserveScroll] = useState(false);
 
   const [filters, setFilters] = useState<FilterOptions>({
     search: searchParams.get('search') || '',
     category: searchParams.get('category') || '',
+    targetGender: searchParams.get('targetGender') || '',
+    stitchType: searchParams.get('stitchType') || '',
+    pieceCount: searchParams.get('pieceCount') || '',
+    season: searchParams.get('season') || '',
     minPrice: searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined,
     maxPrice: searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined,
     sort: searchParams.get('sort') || '-createdAt',
@@ -44,14 +50,18 @@ const Products: React.FC = () => {
   useEffect(() => {
     loadProducts();
     updateURL();
-  }, [filters.category, filters.sort, filters.page]);
+  }, [filters.category, filters.targetGender, filters.stitchType, filters.pieceCount, filters.season, filters.sort, filters.page]);
 
   const loadCategories = async () => {
     try {
-      const response = await categoriesAPI.getCategories();
-      if (response.success && response.data) {
-        setCategories(response.data.categories);
-      }
+      // Static categories for now
+      const staticCategories = [
+        { _id: '1', name: 'Women Collection', slug: 'women', description: 'Women clothing', isActive: true, productCount: 14, sortOrder: 1, createdAt: '2024-01-01', updatedAt: '2024-01-01' },
+        { _id: '2', name: 'Kids Collection', slug: 'kids', description: 'Kids clothing', isActive: true, productCount: 13, sortOrder: 2, createdAt: '2024-01-01', updatedAt: '2024-01-01' },
+        { _id: '3', name: 'Boys Wear', slug: 'boys', description: 'Boys clothing', isActive: true, productCount: 5, sortOrder: 3, createdAt: '2024-01-01', updatedAt: '2024-01-01' },
+        { _id: '4', name: 'Girls Wear', slug: 'girls', description: 'Girls clothing', isActive: true, productCount: 8, sortOrder: 4, createdAt: '2024-01-01', updatedAt: '2024-01-01' }
+      ];
+      setCategories(staticCategories);
     } catch (error) {
       console.error('Failed to load categories:', error);
     }
@@ -64,6 +74,18 @@ const Products: React.FC = () => {
       if (response.success && response.data) {
         setProducts(response.data.products);
         setPagination(response.data.pagination);
+        
+        // Smooth scroll to products grid when filters change (not on page change)
+        if (shouldPreserveScroll && productsGridRef.current) {
+          setTimeout(() => {
+            productsGridRef.current?.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'start',
+              inline: 'nearest'
+            });
+          }, 100);
+          setShouldPreserveScroll(false);
+        }
       }
     } catch (error) {
       console.error('Failed to load products:', error);
@@ -83,18 +105,31 @@ const Products: React.FC = () => {
   };
 
   const handleFilterChange = (key: keyof FilterOptions, value: any) => {
+    setShouldPreserveScroll(true);
     setFilters(prev => ({ ...prev, [key]: value, page: 1 }));
   };
 
   const handlePageChange = (page: number) => {
     setFilters(prev => ({ ...prev, page }));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to top of products grid, not entire page
+    if (productsGridRef.current) {
+      productsGridRef.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start',
+        inline: 'nearest'
+      });
+    }
   };
 
   const clearFilters = () => {
+    setShouldPreserveScroll(true);
     setFilters({
       search: '',
       category: '',
+      targetGender: '',
+      stitchType: '',
+      pieceCount: '',
+      season: '',
       minPrice: undefined,
       maxPrice: undefined,
       sort: '-createdAt',
@@ -192,6 +227,73 @@ const Products: React.FC = () => {
                 </select>
               </div>
 
+              {/* Target Gender */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-secondary-700 mb-2">
+                  Gender
+                </label>
+                <select
+                  value={filters.targetGender || ''}
+                  onChange={(e) => handleFilterChange('targetGender', e.target.value)}
+                  className="input-field"
+                >
+                  <option value="">All Genders</option>
+                  <option value="women">Women</option>
+                  <option value="boys">Boys</option>
+                  <option value="girls">Girls</option>
+                </select>
+              </div>
+
+              {/* Stitch Type */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-secondary-700 mb-2">
+                  Stitch Type
+                </label>
+                <select
+                  value={filters.stitchType || ''}
+                  onChange={(e) => handleFilterChange('stitchType', e.target.value)}
+                  className="input-field"
+                >
+                  <option value="">All Types</option>
+                  <option value="stitched">Stitched</option>
+                  <option value="unstitched">Unstitched</option>
+                </select>
+              </div>
+
+              {/* Piece Count */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-secondary-700 mb-2">
+                  Piece Count
+                </label>
+                <select
+                  value={filters.pieceCount || ''}
+                  onChange={(e) => handleFilterChange('pieceCount', e.target.value)}
+                  className="input-field"
+                >
+                  <option value="">All Pieces</option>
+                  <option value="1">1 Piece</option>
+                  <option value="2">2 Piece</option>
+                  <option value="3">3 Piece</option>
+                </select>
+              </div>
+
+              {/* Season */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-secondary-700 mb-2">
+                  Season
+                </label>
+                <select
+                  value={filters.season || ''}
+                  onChange={(e) => handleFilterChange('season', e.target.value)}
+                  className="input-field"
+                >
+                  <option value="">All Seasons</option>
+                  <option value="summer">Summer</option>
+                  <option value="winter">Winter</option>
+                  <option value="all-season">All Season</option>
+                </select>
+              </div>
+
               {/* Price Range */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-secondary-700 mb-2">
@@ -238,7 +340,7 @@ const Products: React.FC = () => {
           </div>
 
           {/* Products Grid */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3" ref={productsGridRef}>
             {isLoading ? (
               <div className="flex items-center justify-center py-12">
                 <LoadingSpinner size="lg" />

@@ -19,7 +19,7 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [isScrolled, setIsScrolled] = useState(false);
   
   const { user, isAuthenticated, logout } = useAuth();
@@ -75,7 +75,7 @@ const Header: React.FC = () => {
       {/* Top Bar */}
       <div className="bg-primary-600 text-white text-sm py-2">
         <div className="container-custom flex justify-between items-center">
-          <p>Free shipping on orders over PKR 5,000!</p>
+          <p>Free shipping on orders over PKR 15,000!</p>
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/track-order" className="hover:text-primary-200 transition-colors">
               Track Order
@@ -97,13 +97,13 @@ const Header: React.FC = () => {
                 <img 
                   src="/Logo.jpeg" 
                   alt="Rawaiti Pehnawa" 
-                  className="h-16 w-16 object-contain rounded-lg shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105" 
+                  className="h-16 w-16 md:h-20 md:w-20 object-contain rounded-lg shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               <div className="hidden md:block">
                 <div className="text-2xl font-bold text-primary-600 leading-tight group-hover:text-primary-700 transition-colors">
-                  Rawaiti Pehnawa
+                  Rawayti Pehnawa
                 </div>
                 <div className="text-sm text-secondary-600 font-medium tracking-wide">
                   راویتی پہناوا • by Nadia
@@ -111,10 +111,10 @@ const Header: React.FC = () => {
               </div>
               {/* Mobile brand text */}
               <div className="block md:hidden">
-                <div className="text-lg font-bold text-primary-600 leading-tight">
-                  Rawaiti
+                <div className="text-xl font-bold text-primary-600 leading-tight">
+                  Rawayti
                 </div>
-                <div className="text-xs text-secondary-600">
+                <div className="text-sm text-secondary-600 font-medium">
                   راویتی
                 </div>
               </div>
@@ -140,20 +140,20 @@ const Header: React.FC = () => {
             </form>
 
             {/* Right Side Icons */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 md:space-x-4">
               {/* Search Icon - Mobile */}
-              <button className="md:hidden p-2 text-secondary-600 hover:text-primary-600 transition-colors">
-                <MagnifyingGlassIcon className="w-6 h-6" />
+              <button className="md:hidden p-1.5 text-secondary-600 hover:text-primary-600 transition-colors">
+                <MagnifyingGlassIcon className="w-5 h-5" />
               </button>
 
               {/* Wishlist */}
               <button 
                 onClick={() => alert('Wishlist feature coming soon! 💝')}
-                className="p-2 text-secondary-600 hover:text-primary-600 transition-colors relative"
+                className="p-1.5 md:p-2 text-secondary-600 hover:text-primary-600 transition-colors relative"
               >
-                <HeartIcon className="w-6 h-6" />
+                <HeartIcon className="w-5 h-5 md:w-6 md:h-6" />
                 {getWishlistCount() > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-primary-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-primary-600 text-white text-xs rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center text-xs">
                     {getWishlistCount()}
                   </span>
                 )}
@@ -162,11 +162,11 @@ const Header: React.FC = () => {
               {/* Cart */}
               <Link 
                 to="/cart" 
-                className="p-2 text-secondary-600 hover:text-primary-600 transition-colors relative"
+                className="p-1.5 md:p-2 text-secondary-600 hover:text-primary-600 transition-colors relative"
               >
-                <ShoppingBagIcon className="w-6 h-6" />
+                <ShoppingBagIcon className="w-5 h-5 md:w-6 md:h-6" />
                 {cartItemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-primary-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-bounce-subtle">
+                  <span className="absolute -top-1 -right-1 bg-primary-600 text-white text-xs rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center animate-bounce-subtle">
                     {cartItemCount}
                   </span>
                 )}
@@ -177,13 +177,13 @@ const Header: React.FC = () => {
                 <div className="relative">
                   <button
                     onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-2 p-2 text-secondary-600 hover:text-primary-600 transition-colors"
+                    className="flex items-center space-x-2 p-1.5 md:p-2 text-secondary-600 hover:text-primary-600 transition-colors"
                   >
-                    <UserIcon className="w-6 h-6" />
+                    <UserIcon className="w-5 h-5 md:w-6 md:h-6" />
                     <span className="hidden md:block text-sm font-medium">
                       Admin
                     </span>
-                    <ChevronDownIcon className="w-4 h-4" />
+                    <ChevronDownIcon className="w-3 h-3 md:w-4 md:h-4" />
                   </button>
 
                   {isUserMenuOpen && (
@@ -208,21 +208,21 @@ const Header: React.FC = () => {
               ) : (
                 <Link
                   to="/login"
-                  className="p-2 text-secondary-600 hover:text-primary-600 transition-colors"
+                  className="p-1.5 md:p-2 text-secondary-600 hover:text-primary-600 transition-colors"
                 >
-                  <UserIcon className="w-6 h-6" />
+                  <UserIcon className="w-5 h-5 md:w-6 md:h-6" />
                 </Link>
               )}
 
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden p-2 text-secondary-600 hover:text-primary-600 transition-colors"
+                className="md:hidden p-1.5 text-secondary-600 hover:text-primary-600 transition-colors"
               >
                 {isMenuOpen ? (
-                  <XMarkIcon className="w-6 h-6" />
+                  <XMarkIcon className="w-5 h-5" />
                 ) : (
-                  <Bars3Icon className="w-6 h-6" />
+                  <Bars3Icon className="w-5 h-5" />
                 )}
               </button>
             </div>
@@ -257,6 +257,16 @@ const Header: React.FC = () => {
                 {category.name}
               </Link>
             ))}
+            <Link
+              to="/collection/new-arrivals"
+              className={`font-medium transition-colors ${
+                location.pathname === '/collection/new-arrivals' 
+                  ? 'text-primary-600' 
+                  : 'text-secondary-700 hover:text-primary-600'
+              }`}
+            >
+              New Arrivals
+            </Link>
             <Link
               to="/products"
               className="font-medium text-red-600 hover:text-red-700 transition-colors"
@@ -307,6 +317,13 @@ const Header: React.FC = () => {
                   {category.name}
                 </Link>
               ))}
+              <Link
+                to="/collection/new-arrivals"
+                className="block py-2 text-secondary-700 hover:text-primary-600 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                New Arrivals
+              </Link>
               <Link
                 to="/products"
                 className="block py-2 text-red-600 hover:text-red-700 transition-colors"

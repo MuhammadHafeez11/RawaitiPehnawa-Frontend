@@ -191,7 +191,7 @@ const ProductDetail: React.FC = () => {
             Back to Products
           </button>
           <span>/</span>
-          <span>{product.category.name}</span>
+          <span>{product.category ? product.category.name : 'Category'}</span>
           <span>/</span>
           <span className="text-secondary-800">{product.name}</span>
         </motion.div>

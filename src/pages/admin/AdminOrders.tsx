@@ -45,7 +45,7 @@ const AdminOrders: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [showOrderModal, setShowOrderModal] = useState(false);
-  const [updatingStatus, setUpdatingStatus] = useState(false);
+  const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
 
   const statusOptions = [
     { value: '', label: 'All Status' },
@@ -86,11 +86,16 @@ const AdminOrders: React.FC = () => {
 
   const handleStatusUpdate = async (orderId: string, newStatus: string) => {
     try {
-      setUpdatingStatus(true);
+      setUpdatingStatus(orderId);
       const response = await adminAPI.updateOrderStatus(orderId, { status: newStatus });
       if (response.success) {
         toast.success('Order status updated successfully');
-        loadOrders();
+        // Update only the specific order in state instead of reloading entire table
+        setOrders(prevOrders => 
+          prevOrders.map(order => 
+            order._id === orderId ? { ...order, status: newStatus } : order
+          )
+        );
         if (selectedOrder && selectedOrder._id === orderId) {
           setSelectedOrder({ ...selectedOrder, status: newStatus });
         }
@@ -99,7 +104,7 @@ const AdminOrders: React.FC = () => {
       console.error('Failed to update order status:', error);
       toast.error('Failed to update order status');
     } finally {
-      setUpdatingStatus(false);
+      setUpdatingStatus(null);
     }
   };
 
@@ -219,18 +224,32 @@ const AdminOrders: React.FC = () => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <select
-                            value={order.status}
-                            onChange={(e) => handleStatusUpdate(order._id, e.target.value)}
-                            disabled={updatingStatus}
-                            className={`text-xs font-semibold rounded-full px-2 py-1 border-0 ${getStatusColor(order.status)}`}
-                          >
-                            {statusOptions.slice(1).map(option => (
-                              <option key={option.value} value={option.value}>
-                                {option.label}
-                              </option>
-                            ))}
-                          </select>
+                          <div className="relative">
+                            {updatingStatus === order._id ? (
+                              <div className="flex items-center justify-center w-24 h-8">
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-600"></div>
+                              </div>
+                            ) : (
+                              <select
+                                value={order.status}
+                                onChange={(e) => handleStatusUpdate(order._id, e.target.value)}
+                                disabled={updatingStatus === order._id}
+                                className={`text-xs font-semibold rounded-full px-2 py-1 pr-6 border-0 appearance-none cursor-pointer min-w-0 w-24 ${getStatusColor(order.status)}`}
+                                style={{
+                                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                                  backgroundPosition: 'right 0.25rem center',
+                                  backgroundRepeat: 'no-repeat',
+                                  backgroundSize: '0.75rem 0.75rem'
+                                }}
+                              >
+                                {statusOptions.slice(1).map(option => (
+                                  <option key={option.value} value={option.value}>
+                                    {option.label}
+                                  </option>
+                                ))}
+                              </select>
+                            )}
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {new Date(order.createdAt).toLocaleDateString()}

@@ -49,25 +49,33 @@ const Checkout: React.FC = () => {
 
     if (!customerDetails.firstName.trim()) {
       newErrors.firstName = 'First name is required';
+      showFieldError('firstName', 'First name is required');
     }
     if (!customerDetails.lastName.trim()) {
       newErrors.lastName = 'Last name is required';
+      showFieldError('lastName', 'Last name is required');
     }
     if (!customerDetails.email.trim()) {
       newErrors.email = 'Email is required';
+      showFieldError('email', 'Email is required');
     } else if (!/\S+@\S+\.\S+/.test(customerDetails.email)) {
       newErrors.email = 'Please enter a valid email';
+      showFieldError('email', 'Please enter a valid email address');
     }
     if (!customerDetails.phone.trim()) {
       newErrors.phone = 'Phone number is required';
+      showFieldError('phone', 'Phone number is required');
     } else if (!/^(\+92|0)?[0-9]{10}$/.test(customerDetails.phone.replace(/\s/g, ''))) {
       newErrors.phone = 'Please enter a valid Pakistani phone number';
+      showFieldError('phone', 'Please enter a valid Pakistani phone number');
     }
     if (!customerDetails.address.trim()) {
       newErrors.address = 'Address is required';
+      showFieldError('address', 'Complete address is required');
     }
     if (!customerDetails.city.trim()) {
       newErrors.city = 'City is required';
+      showFieldError('city', 'Please select a city');
     }
 
     setErrors(newErrors);
@@ -82,6 +90,13 @@ const Checkout: React.FC = () => {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+  };
+
+  const showFieldError = (field: string, message: string) => {
+    toast.error(message, {
+      duration: 3000,
+      position: 'top-center'
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -262,7 +277,7 @@ const Checkout: React.FC = () => {
                   value={customerDetails.phone}
                   onChange={handleInputChange}
                   className={`input-field ${errors.phone ? 'border-red-500' : ''}`}
-                  placeholder="03XX-XXXXXXX"
+                  placeholder="03XXXXXXXXX"
                 />
                 {errors.phone && (
                   <p className="mt-1 text-sm text-red-600">{errors.phone}</p>

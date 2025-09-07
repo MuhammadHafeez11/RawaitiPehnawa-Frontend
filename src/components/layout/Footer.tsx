@@ -48,10 +48,10 @@ const Footer: React.FC = () => {
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
               <img src="/Logo.jpeg" alt="Rawaiti Pehnawa" className="h-10 w-auto" />
-              <span className="text-2xl font-display font-bold">Rawaiti Pehnawa</span>
+              <span className="text-2xl font-display font-bold">Rawayti Pehnawa</span>
             </div>
             <p className="text-secondary-300 leading-relaxed">
-              Rawaiti Pehnawa brings you authentic Pakistani fashion with modern elegance. 
+              Rawayti Pehnawa brings you authentic Pakistani fashion with modern elegance. 
               Quality clothing that celebrates tradition while embracing contemporary style.
             </p>
             <div className="flex space-x-4">
@@ -176,17 +176,14 @@ const Footer: React.FC = () => {
             <div className="flex items-center space-x-6">
               <span className="text-secondary-400 text-sm">We Accept:</span>
               <div className="flex items-center space-x-3">
-                <div className="bg-white rounded px-2 py-1">
-                  <span className="text-xs font-bold text-blue-600">VISA</span>
+                <div className="bg-white rounded px-3 py-2 flex items-center">
+                  <span className="text-sm font-bold text-blue-600">VISA</span>
                 </div>
-                <div className="bg-white rounded px-2 py-1">
-                  <span className="text-xs font-bold text-red-600">MC</span>
+                <div className="bg-white rounded px-3 py-2 flex items-center">
+                  <span className="text-sm font-bold text-green-600">EasyPaisa</span>
                 </div>
-                <div className="bg-white rounded px-2 py-1">
-                  <span className="text-xs font-bold text-blue-800">AMEX</span>
-                </div>
-                <div className="bg-white rounded px-2 py-1">
-                  <span className="text-xs font-bold text-yellow-600">PP</span>
+                <div className="bg-white rounded px-3 py-2 flex items-center">
+                  <span className="text-sm font-bold text-gray-700">Card Payment</span>
                 </div>
               </div>
             </div>
@@ -213,7 +210,7 @@ const Footer: React.FC = () => {
         <div className="container-custom py-6">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             <div className="flex items-center space-x-1 text-secondary-400 text-sm">
-              <span>© {currentYear} Rawaiti Pehnawa. Made with</span>
+              <span>© {currentYear} Rawayti Pehnawa. Made with</span>
               <HeartIcon className="w-4 h-4 text-red-500" />
               <span>for fashion lovers.</span>
             </div>

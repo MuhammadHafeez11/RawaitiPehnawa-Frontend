@@ -82,7 +82,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
           
           {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col space-y-2">
-            {product.discountedPrice && product.discountedPrice < product.price && (
+            {product.discountedPrice && product.discountedPrice > 0 && product.discountedPrice < product.price && (
               <span className="badge-error text-xs font-bold">
                 -{Math.round(((product.price - product.discountedPrice) / product.price) * 100)}%
               </span>
@@ -153,12 +153,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) =>
           {/* Price */}
           <div className="flex items-center space-x-2">
             <span className="text-lg font-bold text-secondary-800">
-              {product.discountedPrice && product.discountedPrice < product.price 
+              {product.discountedPrice && product.discountedPrice > 0 && product.discountedPrice < product.price 
                 ? formatPrice(product.discountedPrice)
                 : formatPrice(product.price)
               }
             </span>
-            {product.discountedPrice && product.discountedPrice < product.price && (
+            {product.discountedPrice && product.discountedPrice > 0 && product.discountedPrice < product.price && (
               <span className="text-sm text-secondary-500 line-through">
                 {formatPrice(product.price)}
               </span>

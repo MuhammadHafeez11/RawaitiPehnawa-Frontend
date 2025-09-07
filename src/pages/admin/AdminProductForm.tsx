@@ -17,6 +17,10 @@ interface ProductFormData {
   price: number;
   discountedPrice: number;
   stock: number;
+  targetGender: string;
+  stitchType: string;
+  pieceCount: number;
+  season: string;
   tags: string[];
   features: string[];
   materials: string[];
@@ -57,6 +61,10 @@ const AdminProductForm: React.FC = () => {
     price: 0,
     discountedPrice: 0,
     stock: 0,
+    targetGender: '',
+    stitchType: '',
+    pieceCount: 0,
+    season: '',
     tags: [],
     features: [],
     materials: [],
@@ -115,6 +123,10 @@ const AdminProductForm: React.FC = () => {
           price: product.price,
           discountedPrice: product.discountedPrice || 0,
           stock: product.stock || 0,
+          targetGender: product.targetGender || '',
+          stitchType: product.stitchType || '',
+          pieceCount: product.pieceCount || 0,
+          season: product.season || '',
           tags: product.tags,
           features: product.features,
           materials: product.materials,
@@ -421,6 +433,69 @@ const AdminProductForm: React.FC = () => {
                 <p className="text-sm text-gray-500 mt-1">
                   Available quantity in stock
                 </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Target Gender
+                </label>
+                <select
+                  value={formData.targetGender}
+                  onChange={(e) => setFormData({ ...formData, targetGender: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                >
+                  <option value="">Select Gender</option>
+                  <option value="women">Women</option>
+                  <option value="boys">Boys</option>
+                  <option value="girls">Girls</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Stitch Type
+                </label>
+                <select
+                  value={formData.stitchType}
+                  onChange={(e) => setFormData({ ...formData, stitchType: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                >
+                  <option value="">Select Stitch Type</option>
+                  <option value="stitched">Stitched</option>
+                  <option value="unstitched">Unstitched</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Piece Count
+                </label>
+                <select
+                  value={formData.pieceCount}
+                  onChange={(e) => setFormData({ ...formData, pieceCount: parseInt(e.target.value) })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                >
+                  <option value={0}>Select Piece Count</option>
+                  <option value={1}>1 Piece</option>
+                  <option value={2}>2 Piece</option>
+                  <option value={3}>3 Piece</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Season
+                </label>
+                <select
+                  value={formData.season}
+                  onChange={(e) => setFormData({ ...formData, season: e.target.value })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                >
+                  <option value="">Select Season</option>
+                  <option value="summer">Summer</option>
+                  <option value="winter">Winter</option>
+                  <option value="all-season">All Season</option>
+                </select>
               </div>
 
               <div className="md:col-span-2">

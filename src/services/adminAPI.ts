@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL 
-  ? `${process.env.REACT_APP_API_URL}/api`
-  : 'http://localhost:5000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 
+  (process.env.NODE_ENV === 'production' 
+    ? 'https://ecommerce-backend-psi-six.vercel.app/api' 
+    : 'http://localhost:5000/api');
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -25,9 +26,12 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error('API Error:', error.response?.data || error.message);
+    // Only log errors in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error('API Error:', error.response?.data || error.message);
+    }
+    
     if (error.response?.status === 401) {
-      console.log('Session expired, logging out...');
       localStorage.removeItem('accessToken');
       
       // Show notification
@@ -42,7 +46,22 @@ api.interceptors.response.use(
           window.location.href = '/login';
         }, 2000);
       }
+    } else if (error.response?.status >= 500) {
+      // Handle server errors
+      if (typeof window !== 'undefined') {
+        import('react-hot-toast').then(({ default: toast }) => {
+          toast.error('Server error. Please try again later.');
+        });
+      }
+    } else if (error.code === 'NETWORK_ERROR' || !error.response) {
+      // Handle network errors
+      if (typeof window !== 'undefined') {
+        import('react-hot-toast').then(({ default: toast }) => {
+          toast.error('Network error. Please check your connection.');
+        });
+      }
     }
+    
     return Promise.reject(error);
   }
 );
@@ -58,33 +77,33 @@ export const adminAPI = {
   // Products Management
   getProducts: (params = {}) => {
     const queryString = new URLSearchParams(params).toString();
-    return api.get(`/products?${queryString}`).then(res => res.data);
+    return api.get(`/admin/products?${queryString}`).then(res => res.data);
   },
 
   getProduct: (id: string) =>
-    api.get(`/products/${id}`).then(res => res.data),
+    api.get(`/admin/products/${id}`).then(res => res.data),
 
   createProduct: (productData: any) =>
-    api.post('/products', productData).then(res => res.data),
+    api.post('/admin/products', productData).then(res => res.data),
 
   updateProduct: (id: string, productData: any) =>
-    api.put(`/products/${id}`, productData).then(res => res.data),
+    api.put(`/admin/products/${id}`, productData).then(res => res.data),
 
   deleteProduct: (id: string) =>
-    api.delete(`/products/${id}`).then(res => res.data),
+    api.delete(`/admin/products/${id}`).then(res => res.data),
 
   // Categories Management
   getCategories: () =>
-    api.get('/categories').then(res => res.data),
+    api.get('/admin/categories').then(res => res.data),
 
   createCategory: (categoryData: any) =>
-    api.post('/categories', categoryData).then(res => res.data),
+    api.post('/admin/categories', categoryData).then(res => res.data),
 
   updateCategory: (id: string, categoryData: any) =>
-    api.put(`/categories/${id}`, categoryData).then(res => res.data),
+    api.put(`/admin/categories/${id}`, categoryData).then(res => res.data),
 
   deleteCategory: (id: string) =>
-    api.delete(`/categories/${id}`).then(res => res.data),
+    api.delete(`/admin/categories/${id}`).then(res => res.data),
 
   // Orders Management
   getOrders: (params = {}) => {
@@ -113,5 +132,12 @@ export const adminAPI = {
     return api.post('/upload/images', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     }).then(res => res.data);
-  }
+  },
+
+  // Settings Management
+  getSettings: () =>
+    api.get('/admin/settings').then(res => res.data),
+
+  updateSettings: (section: string, settingsData: any) =>
+    api.put(`/admin/settings/${section}`, settingsData).then(res => res.data)
 };

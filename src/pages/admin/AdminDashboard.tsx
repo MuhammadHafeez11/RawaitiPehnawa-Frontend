@@ -16,6 +16,7 @@ interface DashboardStats {
   totalCategories: number;
   totalOrders: number;
   totalUsers: number;
+  totalCustomers: number;
   totalRevenue: number;
   monthlyRevenue: number;
 }
@@ -157,8 +158,8 @@ const AdminDashboard: React.FC = () => {
                 <UserGroupIcon className="h-8 w-8 text-indigo-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Categories</p>
-                <p className="text-2xl font-semibold text-gray-900">{stats?.totalCategories || 0}</p>
+                <p className="text-sm font-medium text-gray-500">Customers</p>
+                <p className="text-2xl font-semibold text-gray-900">{stats?.totalCustomers || 0}</p>
               </div>
             </div>
           </div>
