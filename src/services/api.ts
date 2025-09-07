@@ -1,25 +1,27 @@
 import axios from 'axios';
 import { ApiResponse, AuthResponse, User, Product, ProductsResponse, Category, Cart, Order, FilterOptions } from '../types';
 
-// Force cache bust for API URL
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://ecommerce-backend-psi-six.vercel.app/api';
+// HARDCODED FIX: Force correct backend URL
+const API_BASE_URL = 'https://ecommerce-backend-psi-six.vercel.app/api';
 
-// Debug log for production
-if (process.env.NODE_ENV === 'production') {
-  console.log('🔗 API Base URL:', API_BASE_URL);
-}
+// Debug log
+console.log('🔗 API Base URL:', API_BASE_URL);
+console.log('🌍 Environment:', process.env.NODE_ENV);
 
 // Add request interceptor to handle CORS
 axios.defaults.withCredentials = true;
 
-// Create axios instance
+// Create axios instance with forced URL
 const api = axios.create({
   baseURL: API_BASE_URL,
-  withCredentials: true,
+  withCredentials: false, // Disable for CORS
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+// Remove withCredentials globally for CORS
+axios.defaults.withCredentials = false;
 
 // Token management
 let accessToken: string | null = null;

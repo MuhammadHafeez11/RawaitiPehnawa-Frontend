@@ -1,13 +1,12 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 
-  (process.env.NODE_ENV === 'production' 
-    ? 'https://ecommerce-backend-psi-six.vercel.app/api' 
-    : 'http://localhost:5000/api');
+// HARDCODED FIX: Force correct backend URL
+const API_BASE_URL = 'https://ecommerce-backend-psi-six.vercel.app/api';
+console.log('🔗 Admin API Base URL:', API_BASE_URL);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  withCredentials: true,
+  withCredentials: false, // Disable for CORS
   headers: {
     'Content-Type': 'application/json',
   },
