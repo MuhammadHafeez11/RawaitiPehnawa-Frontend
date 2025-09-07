@@ -1,8 +1,12 @@
 {
   "version": 2,
   "name": "rawayti-pehnawa-frontend",
-  "buildCommand": "npm run build:prod",
+  "buildCommand": "npm run build",
   "outputDirectory": "build",
+  "env": {
+    "GENERATE_SOURCEMAP": "false",
+    "NODE_ENV": "production"
+  },
   "routes": [
     {
       "src": "/static/(.*)",
