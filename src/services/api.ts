@@ -1,15 +1,16 @@
 import axios from 'axios';
 import { ApiResponse, AuthResponse, User, Product, ProductsResponse, Category, Cart, Order, FilterOptions } from '../types';
 
-// HARDCODED FIX: Force correct backend URL with cache bust
-const API_BASE_URL = 'https://ecommerce-backend-psi-six.vercel.app/api';
+// HARDCODED FIX: Use the WORKING backend URL
+const API_BASE_URL = 'https://rawaiti-pehnawa-backend.vercel.app/api';
 const CACHE_BUST = Date.now();
 
 // Debug log with timestamp
 console.log('🔗 API Base URL:', API_BASE_URL);
 console.log('🌍 Environment:', process.env.NODE_ENV);
 console.log('⏰ Cache Bust:', CACHE_BUST);
-console.log('🔄 Forcing correct backend URL!');
+console.log('✅ Using WORKING backend URL!');
+console.log('🚀 Backend should respond now!');
 
 // CORS fix: Disable credentials completely
 axios.defaults.withCredentials = false;

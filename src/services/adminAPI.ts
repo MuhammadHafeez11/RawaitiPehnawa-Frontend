@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-// HARDCODED FIX: Force correct backend URL
-const API_BASE_URL = 'https://ecommerce-backend-psi-six.vercel.app/api';
+// HARDCODED FIX: Use the WORKING backend URL
+const API_BASE_URL = 'https://rawaiti-pehnawa-backend.vercel.app/api';
 console.log('🔗 Admin API Base URL:', API_BASE_URL);
+console.log('✅ Using WORKING backend for admin!');
 
 const api = axios.create({
   baseURL: API_BASE_URL,
