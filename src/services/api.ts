@@ -1,16 +1,17 @@
 import axios from 'axios';
 import { ApiResponse, AuthResponse, User, Product, ProductsResponse, Category, Cart, Order, FilterOptions } from '../types';
 
-// HARDCODED FIX: Use the WORKING backend URL
+// FORCE REBUILD: Working backend URL with new timestamp
 const API_BASE_URL = 'https://rawaiti-pehnawa-backend.vercel.app/api';
-const CACHE_BUST = Date.now();
+const CACHE_BUST = 1757315800000; // Force new build
 
 // Debug log with timestamp
 console.log('🔗 API Base URL:', API_BASE_URL);
 console.log('🌍 Environment:', process.env.NODE_ENV);
 console.log('⏰ Cache Bust:', CACHE_BUST);
-console.log('✅ Using WORKING backend URL!');
-console.log('🚀 Backend should respond now!');
+console.log('✅ FORCE REBUILD - Using WORKING backend!');
+console.log('🚀 New build with working APIs!');
+console.log('🔥 Cache invalidated - Fresh deployment!');
 
 // CORS fix: Disable credentials completely
 axios.defaults.withCredentials = false;
