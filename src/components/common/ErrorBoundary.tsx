@@ -20,10 +20,19 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Log error in development
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Error caught by boundary:', error, errorInfo);
-    }
+    // Always log error for debugging
+    console.error('🚨 ERROR BOUNDARY CAUGHT ERROR:', error);
+    console.error('🔍 ERROR INFO:', errorInfo);
+    console.error('📍 ERROR STACK:', error.stack);
+    console.error('🎯 COMPONENT STACK:', errorInfo.componentStack);
+    
+    // Also log to help debug
+    console.group('🐛 DETAILED ERROR DEBUG');
+    console.log('Error Name:', error.name);
+    console.log('Error Message:', error.message);
+    console.log('Error Stack:', error.stack);
+    console.log('Component Stack:', errorInfo.componentStack);
+    console.groupEnd();
   }
 
   public render() {
@@ -52,14 +61,18 @@ class ErrorBoundary extends Component<Props, State> {
                 Go to Homepage
               </button>
             </div>
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {this.state.error && (
               <details className="mt-4 text-left">
                 <summary className="cursor-pointer text-sm text-gray-500">
-                  Error Details (Development)
+                  Error Details (Click to expand)
                 </summary>
-                <pre className="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto">
-                  {this.state.error.stack}
-                </pre>
+                <div className="mt-2 text-xs bg-gray-100 p-2 rounded overflow-auto">
+                  <p><strong>Error:</strong> {this.state.error.message}</p>
+                  <p><strong>Type:</strong> {this.state.error.name}</p>
+                  <pre className="mt-2 whitespace-pre-wrap">
+                    {this.state.error.stack}
+                  </pre>
+                </div>
               </details>
             )}
           </div>
