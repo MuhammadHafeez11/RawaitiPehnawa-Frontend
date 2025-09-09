@@ -108,6 +108,7 @@ export interface Cart {
   items: CartItem[];
   totalItems: number;
   totalAmount: number;
+  count: number;
   createdAt: string;
   updatedAt: string;
 }

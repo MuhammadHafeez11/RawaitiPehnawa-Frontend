@@ -23,6 +23,7 @@ interface CartContextType extends CartState {
   clearCart: () => Promise<void>;
   getCartItemCount: () => number;
   getCartTotal: () => number;
+  getCartCount: () => number;
   refreshCart: () => Promise<void>;
 }
 
@@ -178,11 +179,16 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const getCartItemCount = (): number => {
-    return state.cart?.totalItems || 0;
+    return state.cart?.totalItems || state.cart?.count || 0;
   };
 
   const getCartTotal = (): number => {
     return state.cart?.totalAmount || 0;
+  };
+
+  // Safe cart count getter
+  const getCartCount = (): number => {
+    return state.cart?.count || state.cart?.totalItems || 0;
   };
 
   const value: CartContextType = {
@@ -193,6 +199,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     clearCart,
     getCartItemCount,
     getCartTotal,
+    getCartCount,
     refreshCart,
   };
 
