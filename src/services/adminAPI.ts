@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // HARDCODED FIX: Use the WORKING backend URL
-const API_BASE_URL = 'https://rawaiti-pehnawa-backend.vercel.app/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 console.log('🔗 Admin API Base URL:', API_BASE_URL);
 console.log('✅ Using WORKING backend for admin!');
 

@@ -1,28 +1,29 @@
 import axios from 'axios';
 import { ApiResponse, AuthResponse, User, Product, ProductsResponse, Category, Cart, Order, FilterOptions } from '../types';
 
-// FORCE REBUILD: Working backend URL with new timestamp
-const API_BASE_URL = 'https://rawaiti-pehnawa-backend.vercel.app/api';
-const CACHE_BUST = 1757315800000; // Force new build
+// Smart API URL selection
+const API_BASE_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://localhost:5000/api'
+  : 'https://rawaiti-pehnawa-backend.vercel.app/api';
+
+const CACHE_BUST = Date.now();
 
 // Debug log with timestamp
 console.log('🔗 API Base URL:', API_BASE_URL);
 console.log('🌍 Environment:', process.env.NODE_ENV);
 console.log('⏰ Cache Bust:', CACHE_BUST);
-console.log('✅ FORCE REBUILD - Using WORKING backend!');
-console.log('🚀 New build with working APIs!');
-console.log('🔥 Cache invalidated - Fresh deployment!');
+console.log('✅ Smart URL selection - Local dev or deployed!');
+console.log('🚀 CORS should work now!');
 
 // CORS fix: Disable credentials completely
 axios.defaults.withCredentials = false;
 
-// Create axios instance with forced URL
+// Create axios instance with clean headers
 const api = axios.create({
   baseURL: API_BASE_URL,
   withCredentials: false,
   headers: {
-    'Content-Type': 'application/json',
-    'X-Cache-Bust': CACHE_BUST.toString()
+    'Content-Type': 'application/json'
   },
 });
 
