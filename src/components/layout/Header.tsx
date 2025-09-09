@@ -42,7 +42,7 @@ const Header: React.FC = () => {
     const loadCategories = async () => {
       try {
         const response = await categoriesAPI.getCategories();
-        if (response.success && response.data) {
+        if (response.success && response.data && response.data.categories) {
           setCategories(response.data.categories.filter(cat => !cat.parentCategory));
         }
       } catch (error) {
@@ -244,7 +244,7 @@ const Header: React.FC = () => {
             >
               Home
             </Link>
-            {categories.map((category) => (
+            {categories && categories.length > 0 && categories.map((category) => (
               <Link
                 key={category._id}
                 to={`/category/${category.slug}`}
@@ -307,7 +307,7 @@ const Header: React.FC = () => {
               >
                 Home
               </Link>
-              {categories.map((category) => (
+              {categories && categories.length > 0 && categories.map((category) => (
                 <Link
                   key={category._id}
                   to={`/category/${category.slug}`}
