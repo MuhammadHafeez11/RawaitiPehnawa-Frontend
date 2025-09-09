@@ -257,14 +257,14 @@ const ProductDetail: React.FC = () => {
             </div>
 
             {/* Rating */}
-            {product.rating.count > 0 && (
+            {product.rating && product.rating.count > 0 && (
               <div className="flex items-center space-x-2">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
                     <StarSolidIcon
                       key={i}
                       className={`w-5 h-5 ${
-                        i < Math.floor(product.rating.average)
+                        i < Math.floor(product.rating.average || 0)
                           ? 'text-yellow-400'
                           : 'text-secondary-300'
                       }`}
