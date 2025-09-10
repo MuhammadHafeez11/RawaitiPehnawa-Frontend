@@ -111,11 +111,11 @@ const Header: React.FC = () => {
               </div>
               {/* Mobile brand text */}
               <div className="block md:hidden">
-                <div className="text-xl font-bold text-primary-600 leading-tight">
-                  Rawayti
+                <div className="text-lg font-bold text-primary-600 leading-tight">
+                  Rawayti Pehnawa
                 </div>
-                <div className="text-sm text-secondary-600 font-medium">
-                  راویتی
+                <div className="text-xs text-secondary-600 font-medium">
+                  راویتی پہناوا
                 </div>
               </div>
             </Link>

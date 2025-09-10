@@ -137,7 +137,7 @@ const Checkout: React.FC = () => {
     }
   };
 
-  const shippingCost = totalAmount >= 5000 ? 0 : 200; // Free shipping over PKR 5000
+  const shippingCost = totalAmount >= 15000 ? 0 : 200; // Free shipping over PKR 15000
   const finalTotal = totalAmount + shippingCost;
 
   if (items.length === 0 && !orderPlaced) {
@@ -418,10 +418,10 @@ const Checkout: React.FC = () => {
                   <span>{formatPrice(finalTotal)}</span>
                 </div>
 
-                {totalAmount < 5000 && (
+                {totalAmount < 15000 && (
                   <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mt-4">
                     <p className="text-sm text-yellow-800">
-                      Add {formatPrice(5000 - totalAmount)} more for free shipping!
+                      Add {formatPrice(15000 - totalAmount)} more for free shipping!
                     </p>
                   </div>
                 )}
