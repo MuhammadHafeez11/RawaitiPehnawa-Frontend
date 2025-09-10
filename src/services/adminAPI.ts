@@ -69,7 +69,7 @@ api.interceptors.response.use(
 export const adminAPI = {
   // Dashboard
   getDashboardStats: () =>
-    api.get('/admin/dashboard').then(res => res.data),
+    api.get('/api/admin/dashboard').then(res => res.data),
 
   getSalesAnalytics: (period = '7d') =>
     api.get(`/admin/analytics/sales?period=${period}`).then(res => res.data),

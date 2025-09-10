@@ -11,8 +11,22 @@ export const useTokenExpiry = () => {
       if (!token || !user) return;
 
       try {
+        // Check if token has proper JWT format
+        const tokenParts = token.split('.');
+        if (tokenParts.length !== 3) {
+          // Not a proper JWT, skip expiry check
+          return;
+        }
+
         // Decode JWT token to check expiry
-        const payload = JSON.parse(atob(token.split('.')[1]));
+        const payload = JSON.parse(atob(tokenParts[1]));
+        
+        // Check if payload has expiry
+        if (!payload.exp) {
+          // No expiry in token, skip check
+          return;
+        }
+
         const currentTime = Date.now() / 1000;
         const timeUntilExpiry = payload.exp - currentTime;
 
@@ -30,7 +44,8 @@ export const useTokenExpiry = () => {
           logout();
         }
       } catch (error) {
-        console.error('Error checking token expiry:', error);
+        // Token decode failed, but don't logout - just skip expiry check
+        console.warn('Token expiry check skipped - invalid format');
       }
     };
 
