@@ -72,56 +72,56 @@ export const adminAPI = {
     api.get('/api/admin/dashboard').then(res => res.data),
 
   getSalesAnalytics: (period = '7d') =>
-    api.get(`/admin/analytics/sales?period=${period}`).then(res => res.data),
+    api.get(`/api/admin/analytics/sales?period=${period}`).then(res => res.data),
 
   // Products Management
   getProducts: (params = {}) => {
     const queryString = new URLSearchParams(params).toString();
-    return api.get(`/admin/products?${queryString}`).then(res => res.data);
+    return api.get(`/api/admin/products?${queryString}`).then(res => res.data);
   },
 
   getProduct: (id: string) =>
-    api.get(`/admin/products/${id}`).then(res => res.data),
+    api.get(`/api/admin/products/${id}`).then(res => res.data),
 
   createProduct: (productData: any) =>
-    api.post('/admin/products', productData).then(res => res.data),
+    api.post('/api/admin/products', productData).then(res => res.data),
 
   updateProduct: (id: string, productData: any) =>
-    api.put(`/admin/products/${id}`, productData).then(res => res.data),
+    api.put(`/api/admin/products/${id}`, productData).then(res => res.data),
 
   deleteProduct: (id: string) =>
-    api.delete(`/admin/products/${id}`).then(res => res.data),
+    api.delete(`/api/admin/products/${id}`).then(res => res.data),
 
   // Categories Management
   getCategories: () =>
-    api.get('/admin/categories').then(res => res.data),
+    api.get('/api/admin/categories').then(res => res.data),
 
   createCategory: (categoryData: any) =>
-    api.post('/admin/categories', categoryData).then(res => res.data),
+    api.post('/api/admin/categories', categoryData).then(res => res.data),
 
   updateCategory: (id: string, categoryData: any) =>
-    api.put(`/admin/categories/${id}`, categoryData).then(res => res.data),
+    api.put(`/api/admin/categories/${id}`, categoryData).then(res => res.data),
 
   deleteCategory: (id: string) =>
-    api.delete(`/admin/categories/${id}`).then(res => res.data),
+    api.delete(`/api/admin/categories/${id}`).then(res => res.data),
 
   // Orders Management
   getOrders: (params = {}) => {
     const queryString = new URLSearchParams(params).toString();
-    return api.get(`/guest-orders/admin?${queryString}`).then(res => res.data);
+    return api.get(`/api/admin/orders?${queryString}`).then(res => res.data);
   },
 
   getOrder: (id: string) =>
-    api.get(`/guest-orders/admin/${id}`).then(res => res.data),
+    api.get(`/api/admin/orders/${id}`).then(res => res.data),
 
   updateOrderStatus: (id: string, statusData: any) =>
-    api.put(`/guest-orders/admin/${id}/status`, statusData).then(res => res.data),
+    api.put(`/api/admin/orders/${id}/status`, statusData).then(res => res.data),
 
   // Upload
   uploadImage: (file: File) => {
     const formData = new FormData();
     formData.append('image', file);
-    return api.post('/upload/image', formData, {
+    return api.post('/api/upload/image', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     }).then(res => res.data);
   },
@@ -129,15 +129,15 @@ export const adminAPI = {
   uploadImages: (files: File[]) => {
     const formData = new FormData();
     files.forEach(file => formData.append('images', file));
-    return api.post('/upload/images', formData, {
+    return api.post('/api/upload/images', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     }).then(res => res.data);
   },
 
   // Settings Management
   getSettings: () =>
-    api.get('/admin/settings').then(res => res.data),
+    api.get('/api/admin/settings').then(res => res.data),
 
   updateSettings: (section: string, settingsData: any) =>
-    api.put(`/admin/settings/${section}`, settingsData).then(res => res.data)
+    api.put(`/api/admin/settings/${section}`, settingsData).then(res => res.data)
 };

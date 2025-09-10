@@ -202,12 +202,12 @@ const AdminDashboard: React.FC = () => {
             </div>
             <div className="p-6">
               <div className="space-y-4">
-                {ordersByStatus.map((status) => (
+                {ordersByStatus?.map((status) => (
                   <div key={status._id} className="flex items-center justify-between">
                     <span className={`inline-flex px-3 py-1 text-sm font-semibold rounded-full ${getStatusColor(status._id)}`}>
                       {status._id}
                     </span>
-                    <span className="text-lg font-semibold text-gray-900">{status.count}</span>
+                    <span className="text-lg font-semibold text-gray-900">{status?.count}</span>
                   </div>
                 ))}
               </div>
